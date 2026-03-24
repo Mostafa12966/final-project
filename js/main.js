@@ -1,69 +1,58 @@
 
 
-   const form = document.getElementById("contactForm");
-const phone = document.getElementById("phone");
-const email = document.getElementById("email");
-const Masseage = document.getElementById("Masseage");
+document.getElementById("btn").addEventListener("click",function(m){
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+m.preventDefault();
 
-  let isValid = true;
 
-  // Phone
-  if (!validatePhone(phone.value)) {
-    setError(phone, "Enter a valid phone number");
-    isValid = false;
-  } else {
-    setSuccess(phone);
-  }
 
-  // Email
-  if (!validateEmail(email.value)) {
-    setError(email, "Enter a valid email");
-    isValid = false;
-  } else {
-    setSuccess(email);
-  }
+let phone=document.getElementById("phone").value;
+let email=document.getElementById("email").value;
+let Masseage=document.getElementById("Masseage ").value;
+let isValid=true
 
-  // Message
-  if (Masseage.value.trim().length < 10) {
-    setError(Masseage, "Message must be at least 10 characters");
-    isValid = false;
-  } else {
-    setSuccess(Masseage);
-  }
+// //////////////////////////////////////////
 
-  if (isValid) {
-    alert("Message sent successfully 🚀");
-    form.reset();
-  }
-});
+document.getElementById("phone").style.border="2px solid black";
+document.getElementById("email").style.border="2px solid black";
+document.getElementById("Masseage").style.border="2px solid black";
 
-// Functions
-function setError(input, msg) {
-  const error = input.nextElementSibling;
-  error.innerText = msg;
-  input.classList.add("error-border");
-  input.classList.remove("success");
+
+// /////////////////////////////////////////////
+
+document.getElementById("p1").innerHTML=""
+document.getElementById("p2").innerHTML=""
+document.getElementById("p3").innerHTML=""
+document.getElementById("p").innerHTML=""
+
+// Conditions
+
+
+if (phone === "" || email === "" || Masseage === "") {
+    document.getElementById("p").innerHTML="please inter Your data"
+    return;
 }
 
-function setSuccess(input) {
-  const error = input.nextElementSibling;
-  error.innerText = "";
-  input.classList.add("success");
-  input.classList.remove("error-border");
-}
+if(isNaN(phone) || phone.length>12){
+document.getElementById("p1").innerHTML="not avalid number"
+document.getElementById("phone").style.border="2px solid red";
 
-// Email validation
-function validateEmail(email) {
-  return /^[^ ]+@[^ ]+\.[a-z]{2,3}$/.test(email);
 }
+if(!email.includes("@") || !email.includes(".")){
+document.getElementById("p2").innerHTML="not avalid email"
+document.getElementById("email").style.border="2px solid red";
 
-// Phone validation (مناسب لمصر)
-function validatePhone(phone) {
-  return /^01[0-2,5]{1}[0-9]{8}$/.test(phone);
 }
+if(Masseage.length>50){
+document.getElementById("p3").innerHTML="Dont Be more than 50 letter"
+document.getElementById("Masseage").style.border="2px solid red";
+
+}
+if (isValid) {
+    document.getElementById("p").innerHTML="All data is Correct"
+}
+    
+})
 
 let btn = document.getElementById("scrollTopBtn");
 
