@@ -1,51 +1,69 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('.form');
-    const phoneInput = document.getElementById('phone');
-    const emailInput = document.getElementById('email');
-    const messageInput = document.getElementById('Masseage');
-    const phoneError = document.getElementById('p1');
-    const emailError = document.getElementById('p3'); // First p3 for email
-    const messageError = document.querySelectorAll('#p3')[1]; // Second p3 for message
-    const generalError = document.getElementById('p');
-    const submitBtn = document.getElementById('btn');
 
-    submitBtn.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent form submission
 
-        // Clear previous errors
-        phoneError.textContent = '';
-        emailError.textContent = '';
-        messageError.textContent = '';
-        generalError.textContent = '';
+   const form = document.getElementById("contactForm");
+const phone = document.getElementById("phone");
+const email = document.getElementById("email");
+const Masseage = document.getElementById("Masseage");
 
-        let isValid = true;
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-        // Simple validation: check if not empty
-        if (phoneInput.value.trim() === '') {
-            phoneError.textContent = 'Phone number is required.';
-            isValid = false;
-        }
+  let isValid = true;
 
-        if (emailInput.value.trim() === '') {
-            emailError.textContent = 'Email is required.';
-            isValid = false;
-        }
+  // Phone
+  if (!validatePhone(phone.value)) {
+    setError(phone, "Enter a valid phone number");
+    isValid = false;
+  } else {
+    setSuccess(phone);
+  }
 
-        if (messageInput.value.trim() === '') {
-            messageError.textContent = 'Message is required.';
-            isValid = false;
-        }
+  // Email
+  if (!validateEmail(email.value)) {
+    setError(email, "Enter a valid email");
+    isValid = false;
+  } else {
+    setSuccess(email);
+  }
 
-        if (isValid) {
-            // Form is valid, show success
-            generalError.textContent = 'Form submitted successfully!';
-            generalError.style.color = 'green';
-        }
+  // Message
+  if (Masseage.value.trim().length < 10) {
+    setError(Masseage, "Message must be at least 10 characters");
+    isValid = false;
+  } else {
+    setSuccess(Masseage);
+  }
 
-        // Always scroll to bottom of the full website
-        window.scrollTo(0, document.body.scrollHeight);
-    });
+  if (isValid) {
+    alert("Message sent successfully 🚀");
+    form.reset();
+  }
 });
+
+// Functions
+function setError(input, msg) {
+  const error = input.nextElementSibling;
+  error.innerText = msg;
+  input.classList.add("error-border");
+  input.classList.remove("success");
+}
+
+function setSuccess(input) {
+  const error = input.nextElementSibling;
+  error.innerText = "";
+  input.classList.add("success");
+  input.classList.remove("error-border");
+}
+
+// Email validation
+function validateEmail(email) {
+  return /^[^ ]+@[^ ]+\.[a-z]{2,3}$/.test(email);
+}
+
+// Phone validation (مناسب لمصر)
+function validatePhone(phone) {
+  return /^01[0-2,5]{1}[0-9]{8}$/.test(phone);
+}
 
 let btn = document.getElementById("scrollTopBtn");
 
